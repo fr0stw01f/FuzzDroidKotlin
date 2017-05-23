@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="soot-flowdroid">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/soot-trunk.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/soot-infoflow-android.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/soot-infoflow.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

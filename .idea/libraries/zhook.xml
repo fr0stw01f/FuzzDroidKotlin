@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="zhook">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/hooking/zhook.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

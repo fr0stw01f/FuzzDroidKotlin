@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="libs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/zhook.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-codec-1.10.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jdktools.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/ddmlib-22.2.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/guava-19.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/ddmlib-24.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-io-2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/junit.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-cli-1.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="android-jars">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/android-jars/android19_core_no_stub.jar!/" />
+      <root url="jar://$PROJECT_DIR$/android-jars/android19_framework_no_stub.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
