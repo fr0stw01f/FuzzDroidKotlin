@@ -12,28 +12,28 @@ import de.tu_darmstadt.sse.additionalappclasses.hookdefinitions.SimpleBooleanRet
 import de.tu_darmstadt.sse.additionalappclasses.hooking.DummyValue;
 import de.tu_darmstadt.sse.additionalappclasses.hooking.HookInfo;
 
-public class UtilHook {	
-	
+public class UtilHook {
+
 	public static Object prepareValueForExchange(Object obj) {
 		if( obj instanceof String ||
-				
-			//primitive types	
+
+			//primitive types
 			obj instanceof Byte ||
 			obj instanceof Short ||
-			obj instanceof Integer ||	
+			obj instanceof Integer ||
 			obj instanceof Long ||
 			obj instanceof Float ||
 			obj instanceof Double ||
 			obj instanceof Boolean ||
 			obj instanceof Character)
 			return obj;
-		
+
 		else
 			return new DummyValue();
 	}
-	
-	
-	private static Class getClassType(String paramType) {				
+
+
+	private static Class getClassType(String paramType) {
 		if(paramType.equals("byte"))
 			return byte.class;
 		else if(paramType.equals("short"))
@@ -69,20 +69,20 @@ public class UtilHook {
 		else {
 			try{
 				if(paramType.endsWith("[]")) {
-					String tmp = paramType.substring(0, paramType.indexOf("[]"));															
+					String tmp = paramType.substring(0, paramType.indexOf("[]"));
 					int size = countMatch(paramType, "[]") - 1;
 					Class<?> tmpClass = Class.forName(tmp);
 					return Array.newInstance(tmpClass, size).getClass();
 				}
 				return Class.forName(paramType);
-			}catch(Exception ex) {				
+			}catch(Exception ex) {
 				ex.printStackTrace();
 			}
 		}
 		throw new RuntimeException("incorrect param-typ");
 	}
-	
-	
+
+
 	public static Class<?>[] getClassTypes(String[] paramTypes) {
 		int amountOfParams = paramTypes.length;
 		Class<?>[] classParamTypes = new Class[amountOfParams];
@@ -91,7 +91,7 @@ public class UtilHook {
 		}
 		return classParamTypes;
 	}
-	
+
 	private static int countMatch(String string, String findStr) {
 		int lastIndex = 0;
 	    int count = 0;
@@ -99,11 +99,11 @@ public class UtilHook {
 	    while ((lastIndex = string.indexOf(findStr, lastIndex)) != -1) {
 	        count++;
 	        lastIndex += findStr.length() - 1;
-	    }	    
+	    }
 	    return count;
 	}
-	
-	
+
+
 	public static Set<HookInfo> initAllHookers() {
 		Set<HookInfo> allHookInfos = new HashSet<HookInfo>();
 		allHookInfos.addAll(new AnalysisDependentHookDefinitions().initializeHooks());

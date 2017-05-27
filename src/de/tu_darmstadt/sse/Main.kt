@@ -125,9 +125,9 @@ class Main private constructor() {
                         continue
                     }
 
-                    val successfullInitialization = config.initialize(singleTargetLocation)
+                    val successfulInitialization = config.initialize(singleTargetLocation)
 
-                    if (successfullInitialization) {
+                    if (successfulInitialization) {
                         //get potential Android event which trigger the initial code section for reaching the logging point
                         var events: MutableSet<FrameworkEvent>?
                         //todo PAPER-EVAL ONLY

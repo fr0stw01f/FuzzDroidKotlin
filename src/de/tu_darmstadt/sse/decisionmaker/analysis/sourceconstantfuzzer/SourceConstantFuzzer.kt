@@ -201,7 +201,7 @@ class SourceConstantFuzzer : FuzzyAnalysis() {
         // We only model method return values
         val hookSignature = clientRequest.loggingPointSignature
 
-        val returnType = extractReturnType(hookSignature)
+        val returnType = extractReturnType(hookSignature!!)
         if (returnType == "void") {
             return ArrayList()
         }

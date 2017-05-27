@@ -38,8 +38,8 @@ class ClientHistory : Cloneable {
         this.codePositions.addAll(original.codePositions)
         this.pathTrace.addAll(original.pathTrace)
         for (orgDecResp in original.decisionAndResponse)
-            this.decisionAndResponse.add(Pair(orgDecResp.first.clone(),
-                    orgDecResp.second.clone()))
+            this.decisionAndResponse.add(Pair(orgDecResp.getFirst()!!.clone(),
+                    orgDecResp.getSecond()!!.clone()))
         this.callgraph = original.callgraph!!.clone()
         this.progressMetrics.putAll(original.progressMetrics)
         this.crashException = original.crashException
@@ -98,15 +98,15 @@ class ClientHistory : Cloneable {
 
     fun getResponseForRequest(request: DecisionRequest): AnalysisDecision? {
         return getDecisionAndResponse()
-                .firstOrNull { it.first == request && it.second.serverResponse!!.doesResponseExist() }
-                ?.second
+                .firstOrNull { it.getFirst() == request && it.getSecond()!!.serverResponse!!.doesResponseExist() }
+                ?.getSecond()
     }
 
 
     fun hasOnlyEmptyDecisions(): Boolean {
         if (decisionAndResponse.isEmpty())
             return false
-        return decisionAndResponse.none { it.second.serverResponse!!.doesResponseExist() }
+        return decisionAndResponse.none { it.getSecond()!!.serverResponse!!.doesResponseExist() }
     }
 
     override fun hashCode(): Int {
@@ -171,7 +171,7 @@ class ClientHistory : Cloneable {
         for (i in decisionAndResponse.indices) {
             val pairThis = decisionAndResponse[i]
             val pairEx = existingHistory.decisionAndResponse[i]
-            if (pairThis.first != pairEx.first || pairThis.second != pairEx.second)
+            if (pairThis.getFirst() != pairEx.getFirst() || pairThis.getSecond() != pairEx.getSecond())
                 return false
         }
         return true
@@ -191,7 +191,7 @@ class ClientHistory : Cloneable {
         val pairIt = decisionAndResponse.iterator()
         while (pairIt.hasNext()) {
             val pair = pairIt.next()
-            if (!pair.second.isDecisionUsed)
+            if (!pair.getSecond()!!.isDecisionUsed)
                 pairIt.remove()
         }
     }

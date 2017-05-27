@@ -43,13 +43,13 @@ class TimingBombTransformer : AbstractInstrumentationTransformer() {
         val longLocal = UtilInstrumenter.generateFreshLocal(body, LongType.v())
         val currentTimeMillis = Scene.v().getMethod("<java.lang.System: long currentTimeMillis()>")
         val timeInvoke = Jimple.v().newStaticInvokeExpr(currentTimeMillis.makeRef())
-        val timeInitalize = Jimple.v().newAssignStmt(longLocal, timeInvoke)
+        val timeInitialize = Jimple.v().newAssignStmt(longLocal, timeInvoke)
 
         val addTime = Jimple.v().newAddExpr(longLocal, LongConstant.v(2000L))
         val timeAssign = Jimple.v().newAssignStmt(longLocal, addTime)
 
 
-        body.units.insertBefore(timeInitalize, setStmt)
+        body.units.insertBefore(timeInitialize, setStmt)
         body.units.insertBefore(timeAssign, setStmt)
 
         val expr = setStmt.invokeExpr

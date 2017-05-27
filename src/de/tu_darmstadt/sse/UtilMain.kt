@@ -82,10 +82,11 @@ object UtilMain {
             try {
                 val br = BufferedReader(FileReader(BLACKLISTED_APKS))
                 br.use { br ->
-                    val line = br.readLine()
+                    var line = br.readLine()
                     while (line != null) {
                         if (!line.startsWith("%"))
                             blacklisted.add(line)
+                        line = br.readLine()
                     }
                 }
             } catch (ex: Exception) {

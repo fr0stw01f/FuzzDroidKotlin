@@ -28,9 +28,10 @@ object UtilDecisionMaker {
         try {
             val br = BufferedReader(FileReader(TARGET_METHODS_FILENAME))
             br.use { br ->
-                val line = br.readLine()
+                var line = br.readLine()
                 while (line != null) {
                     targetLocationsTmp.add(line)
+                    line = br.readLine()
                 }
             }
         } catch (ex: Exception) {

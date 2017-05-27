@@ -90,15 +90,15 @@ class PathExecutionTransformer : AbstractInstrumentationTransformer() {
                 val generated = ArrayList<Unit>()
                 val arrayRefAndInstrumentation = UtilInstrumenter.generateParameterArray(parameter, body)
 
-                val generatedArrayInstrumentation = arrayRefAndInstrumentation.second
-                val arrayRef = arrayRefAndInstrumentation.first
+                val generatedArrayInstrumentation = arrayRefAndInstrumentation.getSecond()
+                val arrayRef = arrayRefAndInstrumentation.getFirst()
 
                 val generatedInvokeStmt = UtilInstrumenter.makeJimpleStaticCallForPathExecution("logInfoAboutNonApiMethodCaller",
                         RefType.v("java.lang.String"), StringConstant.v(body.method.signature),
                         RefType.v("java.lang.String"), StringConstant.v(invokeExprMethodSignature),
-                        UtilInstrumenter.parameterArrayType, if (parameter.isEmpty()) NullConstant.v() else arrayRef)
+                        UtilInstrumenter.parameterArrayType, if (parameter.isEmpty()) NullConstant.v() else arrayRef!!)
                 generatedInvokeStmt.addTag(InstrumentedCodeTag())
-                generated.addAll(generatedArrayInstrumentation)
+                generated.addAll(generatedArrayInstrumentation!!)
                 generated.add(generatedInvokeStmt)
 
                 body.units.insertBefore(generated, unit)

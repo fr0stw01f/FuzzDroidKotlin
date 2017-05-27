@@ -116,11 +116,11 @@ class ApproachLevelMetric(private val targetUnits: Collection<Unit>, private val
             //in case we are not able to extract the the distance information, we take the old one
             if (distance == null) {
                 //				LoggerHelper.logWarning("not able to extract the distance information for: " + unit);
-                retval.first = unit
-                retval.setSecond(retval.second)
-            } else if (distance < retval.second) {
-                retval.first = unit
-                retval.second = distance
+                retval.setFirst(unit)
+                retval.setSecond(retval.getSecond()!!)
+            } else if ((distance as Int) < (retval.getSecond() as Int)) {
+                retval.setFirst(unit)
+                retval.setSecond(distance)
             }
 
         }
@@ -129,8 +129,8 @@ class ApproachLevelMetric(private val targetUnits: Collection<Unit>, private val
 
 
     override fun update(history: ClientHistory): Int {
-        val value = getBestApproachLevel(history.codePostions).second
-        bestSoFar = java.lang.Math.min(bestSoFar!!, value)
+        val value = getBestApproachLevel(history.codePostions).getSecond()
+        bestSoFar = java.lang.Math.min(bestSoFar!!, value as Int)
         // Set progress value
         history.setProgressValue(getMetricIdentifier(), value)
         return value

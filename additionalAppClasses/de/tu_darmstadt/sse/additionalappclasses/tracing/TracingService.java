@@ -47,11 +47,11 @@ public class TracingService extends Service {
 	public TracingService() {
 		super();
 
-		Log.i(SharedClassesSettings.TAG_TS, "TracingService created.");			
+		Log.i(SharedClassesSettings.INSTANCE.getTAG_TS(), "TracingService created.");
 	}
 	
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		Log.i(SharedClassesSettings.TAG_TS, "TracingService action started.");			
+		Log.i(SharedClassesSettings.INSTANCE.getTAG_TS(), "TracingService action started.");
 		
 		// If we have not started our communication with the remote server yet,
 		// we do this now
@@ -77,26 +77,26 @@ public class TracingService extends Service {
 				
 				@Override
 				public void run() {
-					Log.i(SharedClassesSettings.TAG, "Flushing queue, explicit request...");
+					Log.i(SharedClassesSettings.INSTANCE.getTAG(), "Flushing queue, explicit request...");
 					dumpQueue();
 				}
 				
 			}).start();
 		else if (intent.getAction().equals(ACTION_DUMP_QUEUE_SYNCHRONOUS)) {
-			Log.i(SharedClassesSettings.TAG_TS, "Flushing queue (blocking mode), "
+			Log.i(SharedClassesSettings.INSTANCE.getTAG_TS(), "Flushing queue (blocking mode), "
 					+ "explicit request...");
 			dumpQueue(true);
 		}
 		else if (intent.getAction().equals(ACTION_NULL)) {
 			// Do nothing. This action is mainly used for later binding to the
 			// service.
-			Log.i(SharedClassesSettings.TAG_TS, "Starting TracingService...");
+			Log.i(SharedClassesSettings.INSTANCE.getTAG_TS(), "Starting TracingService...");
 		}
 		else
-			Log.e(SharedClassesSettings.TAG_TS, String.format("Invalid action: %s",
+			Log.e(SharedClassesSettings.INSTANCE.getTAG_TS(), String.format("Invalid action: %s",
 					intent.getAction()));
 		
-		Log.i(SharedClassesSettings.TAG_TS, "TracingService action done.");
+		Log.i(SharedClassesSettings.INSTANCE.getTAG_TS(), "TracingService action done.");
 		return START_STICKY;
 	}
 	
@@ -109,11 +109,11 @@ public class TracingService extends Service {
 			public void run() {
 				// If the trace queue is longer than the limit, we dump it
 				if (traceQueue.size() > QUEUE_DUMP_LIMIT) {
-					Log.i(SharedClassesSettings.TAG_TS, "Flushing queue, size limit exceeded...");
+					Log.i(SharedClassesSettings.INSTANCE.getTAG_TS(), "Flushing queue, size limit exceeded...");
 					dumpQueue();
 				}
 				else
-					Log.i(SharedClassesSettings.TAG_TS, "Tracing queue is at " + traceQueue.size() + " elements");
+					Log.i(SharedClassesSettings.INSTANCE.getTAG_TS(), "Tracing queue is at " + traceQueue.size() + " elements");
 				postDelayed(dumpRunnable, DUMP_TIMEOUT);
 			}
 			
@@ -141,7 +141,7 @@ public class TracingService extends Service {
 	
 	
 	private void dumpQueue(boolean waitForReturn) {
-		Log.i(SharedClassesSettings.TAG_TS, "Flushing the queue of " + traceQueue.size()
+		Log.i(SharedClassesSettings.INSTANCE.getTAG_TS(), "Flushing the queue of " + traceQueue.size()
 				+ " items in thread " + Thread.currentThread().getId());
 		
 		// Dump the current contents of the queue
@@ -164,7 +164,7 @@ public class TracingService extends Service {
 				
 				@Override
 				public void dumpQueue() {
-					Log.i(SharedClassesSettings.TAG_TS, "Flushing queue, explicit request "
+					Log.i(SharedClassesSettings.INSTANCE.getTAG_TS(), "Flushing queue, explicit request "
 							+ "through binder...");
 					TracingService.this.dumpQueue(true);
 				}
@@ -187,7 +187,7 @@ public class TracingService extends Service {
 	@SuppressLint("NewApi")
 	@Override
 	public void onDestroy() {
-		Log.i(SharedClassesSettings.TAG_TS, "Destroying tracing service...");
+		Log.i(SharedClassesSettings.INSTANCE.getTAG_TS(), "Destroying tracing service...");
 		handlerDumpQueue.getLooper().quitSafely();
 	}
 	

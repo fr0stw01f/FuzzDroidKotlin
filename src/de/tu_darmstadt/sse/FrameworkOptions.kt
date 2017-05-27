@@ -130,6 +130,7 @@ class FrameworkOptions {
                 .desc("Path to apk")
                 .required()
                 .hasArg()
+                .longOpt("apk")
                 .build()
         )
 
@@ -137,24 +138,28 @@ class FrameworkOptions {
                 .desc("Path to android jar location")
                 .required()
                 .hasArg()
+                .longOpt("androidJar")
                 .build())
 
         options.addOption(Option.builder()
                 .desc("Directory for analysis results")
                 .required()
                 .hasArg()
+                .longOpt("resultDir")
                 .build())
 
         options.addOption(Option.builder()
                 .desc("Path to the EvoFuzz Framework (e.g. /Users/siegfriedrasthofer/framework/")
                 .required()
                 .hasArg()
+                .longOpt("frameworkDir")
                 .build())
 
         options.addOption(Option.builder()
                 .desc("Please provide a port for the device; it has to be an even integer number between 5554 and 5680")
                 .required()
                 .hasArg()
+                .longOpt("devicePort")
                 .build())
 
 

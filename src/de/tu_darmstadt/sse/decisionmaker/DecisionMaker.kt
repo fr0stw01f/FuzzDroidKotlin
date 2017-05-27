@@ -173,7 +173,7 @@ class DecisionMaker(val config: DecisionMakerConfig, val dexFileManager: DexFile
 
         // Check that we have a decision
         if (finalDecision == null)
-            return ServerResponse.getEmptyResponse()
+            return ServerResponse.emptyResponse
         else
             finalDecision.setDecisionUsed()
 
@@ -206,7 +206,7 @@ class DecisionMaker(val config: DecisionMakerConfig, val dexFileManager: DexFile
         println("Incoming decision request: " + request)
 
         // Get the current trace we're working on
-        val currentManager = initializeHistory() ?: return ServerResponse.getEmptyResponse()
+        val currentManager = initializeHistory() ?: return ServerResponse.emptyResponse
 
         // If we need a decision at a certain statement, we have reached that statement
         currentManager.newestClientHistory!!.addCodePosition(request.codePosition,
@@ -224,7 +224,7 @@ class DecisionMaker(val config: DecisionMakerConfig, val dexFileManager: DexFile
         // Compute the decision
         var response: ServerResponse? = computeResponse(request, currentManager)
         if (response == null)
-            response = ServerResponse.getEmptyResponse()
+            response = ServerResponse.emptyResponse
 
         //updating the Analysis Progress Metric
         //logging the new data to file
@@ -425,7 +425,7 @@ class DecisionMaker(val config: DecisionMakerConfig, val dexFileManager: DexFile
                 historyCount++
                 val progressVal = hist.getProgressValue("ApproachLevel")
                 for (pair in hist.allDecisionRequestsAndResponses) {
-                    val name = pair.second.analysisName
+                    val name = pair.getSecond()!!.analysisName
                     val oldVal = analysisToBestScore[name]
                     if (oldVal == null || oldVal < progressVal)
                         analysisToBestScore.put(name!!, progressVal)

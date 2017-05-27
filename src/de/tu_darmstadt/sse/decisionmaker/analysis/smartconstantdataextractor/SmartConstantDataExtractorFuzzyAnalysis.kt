@@ -667,8 +667,8 @@ class SmartConstantDataExtractorFuzzyAnalysis : FuzzyAnalysis() {
                 val valueInfo = map[stmt]!![combinations[i]]
 
                 var assignment: SMTSimpleAssignment? = null
-                val dynValue = valueInfo.second
-                val bindingToUpdate = valueInfo.first.binding
+                val dynValue = valueInfo.getSecond()
+                val bindingToUpdate = valueInfo.getFirst()!!.binding
                 if (dynValue is DynamicStringValue) {
                     val stringValue = dynValue.stringValue
                     assignment = SMTSimpleAssignment(bindingToUpdate, SMTConstantValue(stringValue))
@@ -678,7 +678,7 @@ class SmartConstantDataExtractorFuzzyAnalysis : FuzzyAnalysis() {
                 }
 
                 val assignAssert = SMTAssertStatement(assignment!!)
-                currentAssertions.add(SMTUpdateInfo(assignAssert, stmt, valueInfo.first.sourceOfDataflow!!))
+                currentAssertions.add(SMTUpdateInfo(assignAssert, stmt, valueInfo.getFirst()!!.sourceOfDataflow!!))
             }
             allAssertions.add(currentAssertions)
         }

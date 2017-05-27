@@ -4,5 +4,5 @@ import com.morgoo.hook.zhook.MethodHook.MethodHookParam;
 
 
 public interface Condition {
-	public boolean isConditionSatisfied(MethodHookParam param);
+	boolean isConditionSatisfied(MethodHookParam param);
 }

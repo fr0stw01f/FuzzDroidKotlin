@@ -7,30 +7,30 @@ import de.tu_darmstadt.sse.additionalappclasses.tracing.BytecodeLogger;
 import de.tu_darmstadt.sse.sharedclasses.SharedClassesSettings;
 
 
-public class PathExecutor {	
-	
+public class PathExecutor {
+
 	public static void logInfoAboutNonApiMethodAccess(String methodSignature) {
-		long codePosition = BytecodeLogger.getLastExecutedStatement();
-		Log.i(SharedClassesSettings.TAG, String.format("%s || CodePos: %d || Method-Sign: %s || method access", SharedClassesSettings.METHOD_CALLEE_LABEL, codePosition, methodSignature));
+		long codePosition = BytecodeLogger.Companion.getLastExecutedStatement();
+		Log.i(SharedClassesSettings.INSTANCE.getTAG(), String.format("%s || CodePos: %d || Method-Sign: %s || method access", SharedClassesSettings.INSTANCE.getMETHOD_CALLEE_LABEL(), codePosition, methodSignature));
 	}
-	
-	
+
+
 	public static void logInfoAboutReturnStatement(String methodSignature, Object returnValue ) {
-		long codePosition = BytecodeLogger.getLastExecutedStatement();
-		Log.i(SharedClassesSettings.TAG, String.format("%s || CodePos: %d || Method-Sign: %s || return %s", SharedClassesSettings.RETURN_LABEL, codePosition, methodSignature, concreteParameterValue(returnValue)));
+		long codePosition = BytecodeLogger.Companion.getLastExecutedStatement();
+		Log.i(SharedClassesSettings.INSTANCE.getTAG(), String.format("%s || CodePos: %d || Method-Sign: %s || return %s", SharedClassesSettings.INSTANCE.getRETURN_LABEL(), codePosition, methodSignature, concreteParameterValue(returnValue)));
 	}
-	
-	
+
+
 	public static void logInfoAboutReturnStatement(String methodSignature) {
 		logInfoAboutReturnStatement(methodSignature, "");
 	}
-	
-	
+
+
 	public static void logInfoAboutNonApiMethodCaller(String methodSignature, String invokeExprMethodSignature, Object... parameter)
 	{
-		long codePosition = BytecodeLogger.getLastExecutedStatement();
+		long codePosition = BytecodeLogger.Companion.getLastExecutedStatement();
 		String invokeExprInfo = invokeExprMethodSignature + "(";
-		
+
 		if(parameter != null){
 			for(int i = 0; i < parameter.length; i++){
 				if(i < parameter.length-1){
@@ -45,29 +45,29 @@ public class PathExecutor {
 					else
 						invokeExprInfo += "null";
 				}
-					
+
 			}
 		}
 		invokeExprInfo += ")";
-		
-		Log.i(SharedClassesSettings.TAG, String.format("%s || CodePos: %d || Method-Sign: %s || InvokeExpr: %s", SharedClassesSettings.METHOD_CALLER_LABEL, codePosition, methodSignature, invokeExprInfo));
+
+		Log.i(SharedClassesSettings.INSTANCE.getTAG(), String.format("%s || CodePos: %d || Method-Sign: %s || InvokeExpr: %s", SharedClassesSettings.INSTANCE.getMETHOD_CALLER_LABEL(), codePosition, methodSignature, invokeExprInfo));
 	}
-	
-	
+
+
 	public static void logInfoAboutBranchAccess(String methodSignature, String condition, String branchInfo) {
-		long codePosition = BytecodeLogger.getLastExecutedStatement();
+		long codePosition = BytecodeLogger.Companion.getLastExecutedStatement();
 		//before branch-condition
 		if(branchInfo == null && condition != null)
-			Log.i(SharedClassesSettings.TAG, String.format("[branch access condition] || CodePos: %d || Method-Sign: %s || %s", codePosition, methodSignature, condition));
+			Log.i(SharedClassesSettings.INSTANCE.getTAG(), String.format("[branch access condition] || CodePos: %d || Method-Sign: %s || %s", codePosition, methodSignature, condition));
 		else if(condition == null && branchInfo != null)
-			Log.i(SharedClassesSettings.TAG, String.format("[branch access decision] || CodePos: %d || Method-Sign: %s || %s",codePosition, methodSignature, branchInfo));
+			Log.i(SharedClassesSettings.INSTANCE.getTAG(), String.format("[branch access decision] || CodePos: %d || Method-Sign: %s || %s",codePosition, methodSignature, branchInfo));
 		else
 			throw new RuntimeException("there is a issue with the logInfoAboutBranchAccess method");
 	}
-	
-	
+
+
 	private static String concreteParameterValue(Object object){
-		if(object == null)	
+		if(object == null)
 			return "null";
 		else if(object instanceof String[])
 			return Arrays.deepToString((String[]) object);

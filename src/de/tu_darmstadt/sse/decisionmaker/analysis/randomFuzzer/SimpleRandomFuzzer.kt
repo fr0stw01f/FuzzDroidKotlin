@@ -26,7 +26,7 @@ class SimpleRandomFuzzer : FuzzyAnalysis() {
 
         if (clientRequest.isHookAfter) {
             val hookSignature = clientRequest.loggingPointSignature
-            val returnType = extractReturnType(hookSignature)
+            val returnType = extractReturnType(hookSignature!!)
             if (returnType != "void") {
                 if (primitives.isSupportedType(returnType)) {
                     if (DeterministicRandom.theRandom.nextBoolean()) {

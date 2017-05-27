@@ -19,8 +19,7 @@ import de.tu_darmstadt.sse.additionalappclasses.util.UtilAddContact;
 public class ComponentCallerService extends Service{
 
 	private static Map<Class<?>, Object> globalInstances = new HashMap<>();
-	
-	
+
 	public static void registerGlobalInstance(Class<?> clazz, Object instance) {
 		globalInstances.put(clazz, instance);
 	}
@@ -87,7 +86,7 @@ public class ComponentCallerService extends Service{
 			}
 			
 			else if(task.equals("addContact")) {
-				UtilAddContact.writePhoneContact("Fraunhofer", "9999999999");
+				UtilAddContact.INSTANCE.writePhoneContact("Fraunhofer", "9999999999");
 			}
 		} catch (Exception e) {
 			Log.i("SSE", "ComponentCallerService exception");

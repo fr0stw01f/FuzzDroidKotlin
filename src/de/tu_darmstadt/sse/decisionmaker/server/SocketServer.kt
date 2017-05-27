@@ -300,7 +300,7 @@ class SocketServer private constructor(private val decisionMaker: DecisionMaker)
 
             // Register the new dex file and spawn an analysis task for it
             val dexFileObj = decisionMaker.dexFileManager.add(DexFile(
-                    dexFileRequest.fileName, filePath, dexFile))
+                    dexFileRequest.fileName, filePath, dexFile!!))
             val taskManager = decisionMaker.analysisTaskManager
             taskManager.enqueueAnalysisTask(taskManager.currentTask!!.deriveNewTask(dexFileObj,
                     statementsToRemove))
@@ -323,14 +323,14 @@ class SocketServer private constructor(private val decisionMaker: DecisionMaker)
             if (dynamicValue is DynamicStringValueTraceItem) {
                 val stringValue = dynamicValue.stringValue
                 if (stringValue != null && stringValue.isNotEmpty()) {
-                    val `val` = DynamicStringValue(dynamicValue.getLastExecutedStatement(),
-                            dynamicValue.getParamIdx(), stringValue)
-                    currentClientHistory!!.dynamicValues.add(dynamicValue.getLastExecutedStatement(), `val`)
+                    val `val` = DynamicStringValue(dynamicValue.lastExecutedStatement,
+                            dynamicValue.paramIdx, stringValue)
+                    currentClientHistory!!.dynamicValues.add(dynamicValue.lastExecutedStatement, `val`)
                 }
             } else if (dynamicValue is DynamicIntValueTraceItem) {
-                val `val` = DynamicIntValue(dynamicValue.getLastExecutedStatement(),
-                        dynamicValue.getParamIdx(), dynamicValue.intValue)
-                currentClientHistory!!.dynamicValues.add(dynamicValue.getLastExecutedStatement(), `val`)
+                val `val` = DynamicIntValue(dynamicValue.lastExecutedStatement,
+                        dynamicValue.paramIdx, dynamicValue.intValue)
+                currentClientHistory!!.dynamicValues.add(dynamicValue.lastExecutedStatement, `val`)
             } else
                 throw RuntimeException("Unknown trace item received from app")
         }

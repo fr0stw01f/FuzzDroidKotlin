@@ -15,9 +15,9 @@ class GeneticCombination {
     private fun combine(history1: ClientHistory, history2: ClientHistory,
                         mutationHistories: Set<ClientHistory>): ClientHistory {
         val requests = history1.getDecisionAndResponse()
-                .map { it.first }
+                .map { it.getFirst() }
                 .toMutableSet()
-        history2.getDecisionAndResponse().mapTo(requests) { it.first }
+        history2.getDecisionAndResponse().mapTo(requests) { it.getFirst() }
 
         // Create the combined history
         val newHistory = ClientHistory()
@@ -30,14 +30,14 @@ class GeneticCombination {
                 val remaining = HashSet(mutationHistories)
                 remaining.remove(history1)
                 remaining.remove(history2)
-                response = pickRandomResponse(request, remaining)
+                response = pickRandomResponse(request!!, remaining)
             } else {
                 if (DeterministicRandom.theRandom.nextBoolean()) {
-                    response = history1.getResponseForRequest(request)
+                    response = history1.getResponseForRequest(request!!)
                     if (response == null || !response.serverResponse!!.doesResponseExist())
                         response = history2.getResponseForRequest(request)
                 } else {
-                    response = history2.getResponseForRequest(request)
+                    response = history2.getResponseForRequest(request!!)
                     if (response == null || !response.serverResponse!!.doesResponseExist())
                         response = history1.getResponseForRequest(request)
                 }
@@ -204,7 +204,7 @@ class GeneticCombination {
             if (history.isShadowTrace) {
                 val lastDecision = history.getDecisionAndResponse()[history.getDecisionAndResponse().size - 1]
                 highestConfidence = Math.max(highestConfidence,
-                        lastDecision.second.decisionWeight)
+                        lastDecision.getSecond()!!.decisionWeight)
             } else
                 secondBestHistories.add(history)
         }
@@ -214,7 +214,7 @@ class GeneticCombination {
         for (history in tempList) {
             if (history.isShadowTrace) {
                 val lastDecision = history.getDecisionAndResponse()[history.getDecisionAndResponse().size - 1]
-                if (lastDecision.second.decisionWeight == highestConfidence)
+                if (lastDecision.getSecond()!!.decisionWeight == highestConfidence)
                     secondBestHistories.add(history)
             }
         }

@@ -253,8 +253,8 @@ class SMTPreparationPhase(private val cfg: IInfoflowCFG, private val results: In
 
         if (!dataToMerge.isEmpty()) {
             for (pair in dataToMerge) {
-                pathStmts.add(index, pair.first)
-                accessPaths.add(index, pair.second)
+                pathStmts.add(index, pair.getFirst())
+                accessPaths.add(index, pair.getSecond())
                 ++index
             }
         }
